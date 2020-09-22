@@ -24,12 +24,7 @@
               ></v-textarea>
               <!-- <Due v-on:step="dueChange" :due="duedate" /> -->
               <Due v-on:fromDue="onDue" />
-              <!-- <v-text-field
-                label="status"
-                v-model="status"
-                prepend-icon="folder"
-                :rules="InputRules"
-              ></v-text-field>-->
+              <!-- <v-file-input v-model="file"></v-file-input> -->
               <v-btn class="success mr-5" @click="submit" :loading="loading">Add Project</v-btn>
               <v-btn class="error" @click="addmodal=false">Close</v-btn>
             </v-form>
@@ -61,6 +56,7 @@ export default {
       duedate: "",
       person: "",
       status: "",
+      // file: "",
       form: [],
       loading: false,
       addmodal: false,
@@ -83,6 +79,7 @@ export default {
           content: this.content,
           due: this.duedate,
           person: this.person,
+          // file: this.file,
           status: "Completed",
         };
         db.collection("projects")
@@ -91,6 +88,7 @@ export default {
             // console.log("added to db", this.duedate);
             this.loading = false;
             this.addmodal = false;
+            // console.log(file);
           });
       }
     },

@@ -59,57 +59,32 @@ export default {
   },
   data() {
     return {
-      projects: [
-        // {
-        //   title: "design a new website",
-        //   person: "gomeone",
-        //   due: "January 20 , 2020",
-        //   status: "on-going",
-        // },
-        // {
-        //   title: "areate Website using Vuetify",
-        //   person: "romeone",
-        //   due: "January 20 , 2020",
-        //   status: "hold",
-        // },
-        // {
-        //   title: "Customize the way you want",
-        //   person: "nomeone",
-        //   due: "January 20 , 2020",
-        //   status: "completed",
-        // },
-      ],
+      projects: [],
     };
   },
   methods: {
-    sortBy(c) {
-      this.projects.sort((a, b) => (a[c] < b[c] ? -1 : 1));
+    sortBy(event) {
+      this.projects.sort((a, b) => (a[event] < b[event] ? -1 : 1));
     },
   },
-  created() {
-    db.collection("projects")
-      .get()
-      .then((querySnapshot) => {
-        const datas = querySnapshot.docs.map((doc) => doc.data());
-        this.projects = datas;
-        console.log(datas);
-        // do something with projects
-        // this.projects = projects;
-      });
-  },
   // created() {
-  //   db.collection("projects").onSnapshot((res) => {
-  //     const changes = res.docChanges();
-  //     changes.foreach((change) => {
-  //       if (change.type === "added") {
-  //         this.projects.push({
-  //           ...changes.doc.data(),
-  //           id: change.doc.id,
-  //         });
-  //       }
+  //   db.collection("projects")
+  //     .get()
+  //     .then((querySnapshot) => {
+  //       const datas = querySnapshot.docs.map((doc) => doc.data());
+
+  //       this.projects = datas;
+  //       console.log(this.projects);
   //     });
-  //   });
   // },
+  created() {
+    db.collection("projects").onSnapshot((res) => {
+      const changes = res.docChanges();
+      changes.map((change) => {
+        this.projects.push(change.doc.data());
+      });
+    });
+  },
 };
 </script>
 <style scoped>
