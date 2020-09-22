@@ -50,30 +50,34 @@
 
 <script>
 // @ is an alias to /src
-
+// import Due from "../components/Duedate";
+import db from "@/fb";
 export default {
   name: "Dashboard",
+  components: {
+    // Due,
+  },
   data() {
     return {
       projects: [
-        {
-          title: "design a new website",
-          person: "gomeone",
-          due: "January 20 , 2020",
-          status: "on-going",
-        },
-        {
-          title: "areate Website using Vuetify",
-          person: "romeone",
-          due: "January 20 , 2020",
-          status: "hold",
-        },
-        {
-          title: "Customize the way you want",
-          person: "nomeone",
-          due: "January 20 , 2020",
-          status: "completed",
-        },
+        // {
+        //   title: "design a new website",
+        //   person: "gomeone",
+        //   due: "January 20 , 2020",
+        //   status: "on-going",
+        // },
+        // {
+        //   title: "areate Website using Vuetify",
+        //   person: "romeone",
+        //   due: "January 20 , 2020",
+        //   status: "hold",
+        // },
+        // {
+        //   title: "Customize the way you want",
+        //   person: "nomeone",
+        //   due: "January 20 , 2020",
+        //   status: "completed",
+        // },
       ],
     };
   },
@@ -82,6 +86,30 @@ export default {
       this.projects.sort((a, b) => (a[c] < b[c] ? -1 : 1));
     },
   },
+  created() {
+    db.collection("projects")
+      .get()
+      .then((querySnapshot) => {
+        const datas = querySnapshot.docs.map((doc) => doc.data());
+        this.projects = datas;
+        console.log(datas);
+        // do something with projects
+        // this.projects = projects;
+      });
+  },
+  // created() {
+  //   db.collection("projects").onSnapshot((res) => {
+  //     const changes = res.docChanges();
+  //     changes.foreach((change) => {
+  //       if (change.type === "added") {
+  //         this.projects.push({
+  //           ...changes.doc.data(),
+  //           id: change.doc.id,
+  //         });
+  //       }
+  //     });
+  //   });
+  // },
 };
 </script>
 <style scoped>
